@@ -54,7 +54,7 @@ class CalendarEvent(models.Model):
 
         partner_info_list = []
         for partner in self.partner_ids:
-            partner_info = f" İsim: {partner.name} Mail: {partner.email} Telefon: {partner.phone})"
+            partner_info = f" İsim: {partner.name} Mail: {partner.email} Telefon: {partner.phone} "
             partner_info_list.append(partner_info)
 
         html_partner_info = "<p><strong>Katılımcılar:</strong></p><ul>"
@@ -68,6 +68,7 @@ class CalendarEvent(models.Model):
         if not self.project_id:
             raise UserError("Proje seçilmediği için görev oluşturulamadı. Lütfen bir proje seçiniz.")
 
+
         Task = self.env['project.task']
         new_task = Task.create({
             'name': self.name,
@@ -77,7 +78,30 @@ class CalendarEvent(models.Model):
         })
 
         return True
-    """
+
+""" def action_create_subtask(self):
+        from . import project_task
+
+        if not self.project_id:
+            raise UserError("Proje seçilmediği için alt görev oluşturulamadı. Lütfen bir proje seçiniz.")
+
+        calendar_event_id = self.id
+        project_task_id = self.task_id
+
+
+        participants = self.attendee_ids
+
+
+        for participant in participants:
+            subtask_vals = {
+                'name': participant.name,
+                'project_id': project_task_id,
+            }
+            project_task.create(subtask_vals)
+
+
+        return True
+
     def _generate_attendee_info(self):
         # Katılımcı bilgilerini topla ve HTML formatına dönüştür
         partner_info_list = []
