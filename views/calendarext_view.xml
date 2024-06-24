@@ -13,12 +13,12 @@
                 <field name="project_id"/>
             </xpath>
 
-            <xpath expr="//field[@name='description']" position="before">
+            <xpath expr="//field[@name='user_id']" position="after">
                 <button name="action_add_attendee" string="Katılımcı Ekle" type="object" class="btn-primary"/>
             </xpath>
 
-            <xpath expr="//field[@name='description']" position="after">
-                <button name="action_create_task" string="Görev Ekle" type="object" class="btn-primary"/>
+            <xpath expr="//field[@name='project_id']" position="after">
+                <button name="action_create_task" string="Projeye Görev Ekle" type="object" class="btn-primary"/>
             </xpath>
 
 
@@ -26,20 +26,23 @@
     </record>
 
     <record id="view_task_form2" model="ir.ui.view">
-    <field name="name">project.task.form2</field>
-    <field name="model">project.task</field>
-    <field name="inherit_id" ref="project.view_task_form2"/>
-    <field name="arch" type="xml">
-        <field name="tag_ids" position="after">
-            <field name="calendar_event_id" readonly="1"/>
+        <field name="name">project.task.form2</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="calendar_event_id" readonly="1"/>
+            </field>
+            <field name="calendar_event_id" position="after">
+                <field name="hours_spent" widget="float_time" readonly="1"/>
+            </field>
+            <notebook>
+                <field name="description" readonly="1"/>
+            </notebook>
         </field>
-        <field name="calendar_event_id" position="after">
-            <field name="hours_spent" widget="float_time" readonly="1"/>
-        </field>
-    <notebook>
-        <field name="description" readonly="1"/>
-    </notebook>
-    </field>
-</record>
+    </record>
+
+
+
 
 </odoo>
